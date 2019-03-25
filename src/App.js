@@ -1,28 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import useStore from "./hook";
+import withStore from "./hoc";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const CommentList = ({ comments, name }) => {
+  const commentList = comments.map((c, index) => <li key={index}>{c}</li>);
+  return (
+    <>
+      <h2>{name}</h2>
+      <ul>{commentList}</ul>
+    </>
+  );
+};
+
+const CommentListWithHOC = withStore(CommentList);
+
+const CommentListUsingHook = ({ name }) => {
+  const comments = useStore(["Hooks", "are", "better"]);
+  const commentList = comments.map((c, index) => <li key={index}>{c}</li>);
+  return (
+    <>
+      <h2>{name}</h2>
+      <ul>{commentList}</ul>
+    </>
+  );
+};
+
+const App = () => (
+  <div className="App">
+    <center>
+      <CommentListWithHOC name="Corry" />
+      <CommentListUsingHook name="Markus" />
+    </center>
+  </div>
+);
 
 export default App;
