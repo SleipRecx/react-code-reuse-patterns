@@ -1,6 +1,7 @@
 import React from "react";
 import useStore from "./hook";
 import withStore from "./hoc";
+import RenderWithStore from "./renderProps";
 
 const CommentList = ({ comments, name }) => {
   const commentList = comments.map((c, index) => <li key={index}>{c}</li>);
@@ -28,8 +29,13 @@ const CommentListUsingHook = ({ name }) => {
 const App = () => (
   <div className="App">
     <center>
-      <CommentListWithHOC name="Corry" />
-      <CommentListUsingHook name="Markus" />
+      <React.StrictMode>
+        <CommentListWithHOC name="Corry" />
+        <RenderWithStore>
+          {props => <CommentList name="Espen" {...props} />}
+        </RenderWithStore>
+        <CommentListUsingHook name="Markus" />
+      </React.StrictMode>
     </center>
   </div>
 );
